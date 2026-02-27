@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { Button } from "./Button";
 
 export function Modal({
   open,
@@ -52,9 +51,28 @@ export function Modal({
           <h2 id="modal-title" className="text-lg font-semibold text-white">
             {title}
           </h2>
-          <Button variant="ghost" onClick={onClose}>
-            Close
-          </Button>
+          <button
+            type="button"
+            onClick={onClose}
+            className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-lg text-red-500 transition hover:bg-red-500/20 hover:text-red-400 focus:outline-none focus:ring-2 focus:ring-red-500/50"
+            aria-label="Close"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden
+            >
+              <path d="M18 6 6 18" />
+              <path d="m6 6 12 12" />
+            </svg>
+          </button>
         </div>
         <div className="max-h-[calc(90vh-4.5rem)] overflow-y-auto p-6">{children}</div>
       </div>
