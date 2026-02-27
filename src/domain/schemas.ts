@@ -63,8 +63,10 @@ export type Creator = z.infer<typeof CreatorSchema>;
 
 export const AIBriefResponseSchema = z.object({
   outreachMessage: z.string(),
-  contentIdeas: z.array(z.string()).length(5),
-  hookSuggestions: z.array(z.string()).length(3),
+  contentIdeas: z.array(z.string()).min(5),
+  hookSuggestions: z.array(z.string()).min(3),
+  keyTalkingPoints: z.array(z.string()).optional(),
+  suggestedPostingSchedule: z.string().optional(),
 });
 
 export type AIBriefResponse = z.infer<typeof AIBriefResponseSchema>;

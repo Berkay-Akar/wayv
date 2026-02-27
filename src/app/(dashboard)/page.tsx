@@ -7,7 +7,12 @@ type CampaignItem = { id: string; brand: string; objective: string; targetCountr
 
 function normalizeCampaigns(data: unknown): CampaignItem[] {
   if (Array.isArray(data)) return data;
-  if (data && typeof data === "object" && "json" in data && Array.isArray((data as { json: CampaignItem[] }).json)) {
+  if (
+    data &&
+    typeof data === "object" &&
+    "json" in data &&
+    Array.isArray((data as { json: CampaignItem[] }).json)
+  ) {
     return (data as { json: CampaignItem[] }).json;
   }
   return [];
@@ -18,7 +23,7 @@ export default function HomePage() {
   const campaigns = normalizeCampaigns(rawData);
 
   return (
-    <main className="mx-auto max-w-6xl px-4 py-10">
+    <div className="p-6">
       <p className="text-gray-400">
         Choose a campaign to view top creators and generate AI briefs.
       </p>
@@ -28,7 +33,7 @@ export default function HomePage() {
           {[1, 2, 3].map((i) => (
             <div
               key={i}
-              className="h-32 animate-pulse rounded-lg border border-gray-800 bg-gray-800/40"
+              className="h-32 animate-pulse rounded-xl border border-gray-800 bg-[var(--card)]"
             />
           ))}
         </div>
@@ -48,7 +53,7 @@ export default function HomePage() {
             <Link
               key={c.id}
               href={`/campaigns/${c.id}`}
-              className="rounded-lg border border-gray-800 bg-gray-900/60 p-5 transition hover:border-gray-600 hover:bg-gray-900/80 hover:shadow-md"
+              className="rounded-xl border border-gray-700/60 bg-[var(--card)] p-5 transition hover:border-gray-600 hover:shadow-lg"
             >
               <h2 className="text-xl font-semibold text-white">{c.brand}</h2>
               <p className="mt-1 text-sm text-gray-400">{c.objective}</p>
@@ -57,6 +62,6 @@ export default function HomePage() {
           ))}
         </div>
       )}
-    </main>
+    </div>
   );
 }

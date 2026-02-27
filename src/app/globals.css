@@ -1,8 +1,13 @@
+@import "tailwindcss";
+
 :root {
-  --radius: 8px;
+  --background: #0f172a;
+  --card: #1e293b;
+  --card-hover: #111827;
+  --radius: 0.75rem;
   --accent: 99 102 241;
   --surface: 17 24 39;
-  --border: 31 41 55;
+  --border: 51 65 85;
 }
 
 html,
@@ -13,7 +18,7 @@ body {
 }
 
 body {
-  background-color: #050816;
+  background-color: var(--background);
   color: #f9fafb;
 }
 

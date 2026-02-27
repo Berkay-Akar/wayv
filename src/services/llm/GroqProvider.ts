@@ -24,7 +24,7 @@ export class GroqProvider implements LLMProvider {
           {
             role: "system",
             content:
-              "You generate influencer campaign briefs. Respond with strict JSON only, no markdown or explanation text.",
+              "Generate detailed, actionable influencer campaign briefs. Respond with strict JSON only, no markdown or explanation.",
           },
           {
             role: "user",

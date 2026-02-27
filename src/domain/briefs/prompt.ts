@@ -23,8 +23,10 @@ export function buildBriefPrompt(campaign: Campaign, creator: Creator): string {
     `- Avg watch time: ${creator.avgWatchTime.toFixed(1)}s`,
     `- Primary hook type: ${creator.primaryHookType}`,
     ``,
-    `Generate a structured brief as strict JSON with the following shape (no markdown, no comments, no extra text):`,
-    `{"outreachMessage": string, "contentIdeas": string[5], "hookSuggestions": string[3]}`,
+    `Write a detailed, actionable brief. Outreach message: 2-3 sentences. Content ideas: specific and varied. Hook suggestions: ready to use.`,
+    ``,
+    `Respond with strict JSON only (no markdown, no comments, no extra text). Shape:`,
+    `{"outreachMessage": string, "contentIdeas": string[7], "hookSuggestions": string[5], "keyTalkingPoints": string[3-5], "suggestedPostingSchedule": string}`,
   ]
     .filter(Boolean)
     .join("\n");
