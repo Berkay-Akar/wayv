@@ -16,7 +16,6 @@ export function AppProviders({ children }: { children: ReactNode }) {
           transformer: superjson,
         }),
       ],
-      transformer: superjson,
     }),
   );
 
