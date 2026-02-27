@@ -1,7 +1,7 @@
 {
   "name": "wayv-agency",
   "version": "1.0.0",
-  "private": true, "engines": { "node": ">=18" },
+  "private": true, "engines": { "node": "20.x" },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
