@@ -46,9 +46,30 @@ Tests live under `src/domain/` next to the code they cover:
 
 Stack: Vitest. Run with `npm run test` or `npm run test:run`.
 
+## Scoring
+
+Creators are ranked by a weighted score (0–100). Seven factors, each normalized to a 0–1 unit score, are weighted and summed; the total is then scaled to 0–100. Weights are in `src/domain/matching/config.ts` (total weight 100):
+
+- **Niche match** – overlap between campaign niches and creator niches  
+- **Audience country** – whether the campaign’s target country is in the creator’s top audience countries  
+- **Engagement** – engagement rate (clamped and normalized)  
+- **Watch time** – creator’s avg watch time vs campaign minimum  
+- **Follower fit** – whether followers fall in the campaign’s budget range  
+- **Hook match** – campaign’s preferred hook types vs creator’s primary hook type  
+- **Brand safety penalty** – penalty for brand-safety flags or use of campaign’s blocked words in recent posts  
+
+Sort order: by total score descending; ties broken by engagement score, then watch time score, then creator id.
+
 ## Tech
 
 - Next.js 16 (App Router), React 19  
 - tRPC, TanStack Query, Supabase (Postgres)  
 - Tailwind CSS  
 - Brief generation via Groq (LLM); responses cached per campaign+creator in Supabase  
+
+## Trade-offs & notes
+
+- **LLM:** Groq is used for cost and latency; the provider is behind an interface so it can be swapped (e.g. OpenAI, Anthropic) without changing callers.  
+- **Cache:** Briefs are cached in Supabase per (campaign_id, creator_id). Same pair never triggers a second LLM call.  
+- **JSON from LLM:** We ask for strict JSON and validate with Zod. If the response is wrapped in markdown we strip it and retry up to 2 times; we don’t do deeper repair (e.g. trailing commas). That could be added if needed.  
+- **Matching:** All creators are loaded and scored in memory; top 20 are returned. For very large creator sets, batching or DB-side filtering would be the next step.  
