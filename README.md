@@ -40,7 +40,7 @@ App runs at [http://localhost:3000](http://localhost:3000).
 
 Tests live under `src/domain/` next to the code they cover:
 
-- `src/domain/briefs/__tests__/parse.test.ts` – brief JSON parsing  
+- `src/domain/briefs/__tests__/parse.test.ts` – brief JSON parsing, markdown strip, and repair (trailing commas, BOM)  
 - `src/domain/matching/__tests__/factors.test.ts` – scoring factors  
 - `src/domain/matching/__tests__/engine.test.ts` – matching engine  
 
@@ -71,5 +71,5 @@ Sort order: by total score descending; ties broken by engagement score, then wat
 
 - **LLM:** Groq is used for cost and latency; the provider is behind an interface so it can be swapped (e.g. OpenAI, Anthropic) without changing callers.  
 - **Cache:** Briefs are cached in Supabase per (campaign_id, creator_id). Same pair never triggers a second LLM call.  
-- **JSON from LLM:** We ask for strict JSON and validate with Zod. If the response is wrapped in markdown we strip it and retry up to 2 times; we don’t do deeper repair (e.g. trailing commas). That could be added if needed.  
+- **JSON from LLM:** We ask for strict JSON and validate with Zod. We strip markdown wrappers, then apply a repair step (trailing commas, BOM) if parse fails; the service retries up to 2 times. Deeper repair (e.g. single-quoted keys) could be added if needed.  
 - **Matching:** All creators are loaded and scored in memory; top 20 are returned. For very large creator sets, batching or DB-side filtering would be the next step.  
